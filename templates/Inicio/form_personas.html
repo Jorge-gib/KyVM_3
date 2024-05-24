@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Póngase en contacto con nosotros - K & V M{% endblock title %}
+
+{% block content %}
+
+<h1>Póngase en contacto con nosotros</h1>
+<h2>Por favor, llene el formulario</h2>
+<form method="post" action="{% url 'form_personas' %}" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label for="id_nombre" class="nombre contacto">Nombre:</label>
+    <input type="text" name="nombre" id="id_nombre" class="input" title="Debe ingresar solo letras" placeholder="Ingrese su nombre aquí" required>
+
+    <label for="id_email" class="nombre contacto">Correo electrónico:</label>
+    <input type="email" name="email" id="id_email" class="input" placeholder="Ingrese su correo electrónico aquí" required>
+
+    <label for="id_profesion" class="nombre contacto">Profesión:</label>
+    <input type="text" name="profesion" id="id_profesion" class="input" title="Debe ingresar solo letras" placeholder="Ingrese su profesión aquí" required>
+
+    <label for="id_opciones_interes" class="nombre contacto">Opciones de interés:</label>
+    <select name="opciones_interes" id="id_opciones_interes" class="input" required>
+        <option value="">Seleccione una opción</option>
+        <option value="Programacion">Programación</option>
+        <option value="Gestion_proyectos">Gestión de Proyectos</option>
+        <option value="Soporte_tecnico">Soporte técnico</option>
+        <option value="Testing">Testing</option>
+        <option value="Arquitecto_soluciones">Arquitecto de soluciones</option>
+        <option value="DBA">DBA</option>
+        <option value="Scrum_master">Scrum master</option>
+        <option value="Otro">Otro</option>
+    </select>
+
+    <label for="id_cv" class="nombre contacto">Adjuntar CV:</label>
+    <input type="file" name="cv" id="id_cv" accept=".pdf,.doc,.docx,.txt,.rtf" required>
+    {% if form.errors.cv %}
+        <p class="error-message">El archivo adjunto no puede ser enviado:</p>
+        {% for error in form.errors.cv %}
+            <p class="error-message">{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <label for="id_linkedin_url" class="nombre contacto">URL de LinkedIn:</label>
+    <input type="url" name="linkedin_url" id="id_linkedin_url" class="input" placeholder="Ingrese su URL de LinkedIn aquí (opcional)">
+
+    <button type="submit">Enviar</button>
+
+    {% if form.errors %}
+        <div class="error-message">
+            {% for field, error_list in form.errors.items %}
+                {% for error in error_list %}
+                    <p>{{ field }}: {{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</form>
+
+{% if error_message %}
+    <div class="alert alert-danger" role="alert">
+        {{ error_message }}
+    </div>
+{% endif %}
+
+{% endblock content %}
