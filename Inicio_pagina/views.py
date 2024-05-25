@@ -81,9 +81,13 @@ def form_personas(request):
                     formulario.save()  # Guarda el formulario después de enviar el correo
                     return redirect('confirmacion_2')
                 except IOError as e:
-                    error_message = "Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente."
-                    print("Error al enviar el correo electrónico:", e)
-                    print(traceback.format_exc())
+                    if 'cannot read' in str(e):
+                        # Si el archivo no se puede leer, redirigir a la URL 'archivo_dañado'
+                        return redirect('archivo_dañado')
+                    else:
+                        error_message = "Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente."
+                        print("Error al enviar el correo electrónico:", e)
+                        print(traceback.format_exc())
                 except Exception as e:
                     if isinstance(e, IOError) and 'Damaged file' in str(e):
                         # Si el archivo está dañado, redirigir a la URL 'archivo_dañado'
