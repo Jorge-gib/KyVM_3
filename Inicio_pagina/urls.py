@@ -10,6 +10,7 @@ urlpatterns = [
     path('confirmacion', views.confirmacion, name='confirmacion'),
     path('form_personas', views.form_personas, name='form_personas'),
     path('confirmacion_2', views.confirmacion_2, name='confirmacion_2'),
+    path('archivo_malo', views.archivo_malo, name='archivo_malo'),
 ]
 
 if settings.DEBUG:

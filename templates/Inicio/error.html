@@ -1,0 +1,13 @@
+<!-- solicitud_completada.html -->
+{% extends 'base.html' %}
+
+
+{% block title %}Solicitud de trabajo - K & V M{% endblock title %}
+
+{% block content %} 
+    <h1>El archivo adjunto esta defectuoso</h1>
+    <p>Tu solicitud de trabajo ha no se envio, intente adjuntar un archivo nuevo</p>
+
+    <!-- Agrega el enlace para redirigir a la página de inicio -->
+    <a href="{% url 'form_personas' %}">Volver al formulario</a>
+{% endblock content %}

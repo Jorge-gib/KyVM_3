@@ -75,16 +75,23 @@ def form_personas(request):
         formulario = FormularioPersonasForm(request.POST, request.FILES)
         if formulario.is_valid():
             archivo_adjunto = request.FILES.get('cv')
-            formulario.save()
             if archivo_adjunto:
                 try:
                     enviar_correo_trabajadores(formulario.cleaned_data, archivo_adjunto)
                     formulario.save()  # Guarda el formulario después de enviar el correo
                     return redirect('confirmacion_2')
-                except Exception as e:
-                    error_message = "Hubo un problema al enviar el correo. Por favor, intente nuevamente."
+                except IOError as e:
+                    error_message = "Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente."
                     print("Error al enviar el correo electrónico:", e)
                     print(traceback.format_exc())
+                except Exception as e:
+                    if isinstance(e, IOError) and 'Damaged file' in str(e):
+                        # Si el archivo está dañado, redirigir a la URL 'archivo_dañado'
+                        return redirect('archivo_dañado')
+                    else:
+                        error_message = "Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente."
+                        print("Error al enviar el correo electrónico:", e)
+                        print(traceback.format_exc())
             else:
                 error_message = "No se adjuntó ningún archivo."
     else:
@@ -125,3 +132,6 @@ def enviar_correo_trabajadores(datos_formulario, archivo_adjunto):
     except Exception as e:
         print("Error al enviar el correo electrónico:", e)
         print(traceback.format_exc())
+        
+def archivo_malo(request):
+    return render(request, 'error.html')
