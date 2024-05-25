@@ -14,10 +14,8 @@ with open(CREDENTIALS_FILE_PATH) as f:
 GMAIL_API_SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 
 # Configuración de Django para archivos adjuntos
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-CV_UPLOAD_DIR = 'cv/'
-CV_UPLOAD_PATH = os.path.join(MEDIA_ROOT, CV_UPLOAD_DIR)
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-v!goh*e2ft_a=y(dx-vdy$v67h)+z+zrh763-m^!&bl5whu2ww'
 

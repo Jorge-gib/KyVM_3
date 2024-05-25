@@ -17,24 +17,18 @@ class Formulario(models.Model):
         return self.empresa
 
 class FormularioPersonas(models.Model):
-    OPCIONES_INTERES = [
+    nombre = models.CharField(max_length=100)
+    email = models.EmailField()
+    profesion = models.CharField(max_length=100)
+    opciones_interes = models.CharField(max_length=100, choices=[
         ('Programacion', 'Programación'),
-        ('Gestion de Proyectos', 'Gestión de Proyectos'),
-        ('Soporte técnico', 'Soporte técnico'),
+        ('Gestion_proyectos', 'Gestión de Proyectos'),
+        ('Soporte_tecnico', 'Soporte técnico'),
         ('Testing', 'Testing'),
-        ('Arquitecto de soluciones', 'Arquitecto de soluciones'),
+        ('Arquitecto_soluciones', 'Arquitecto de soluciones'),
         ('DBA', 'DBA'),
-        ('Scrum master', 'Scrum master'),
-        ('Marketing digital','Marketing digital'),
-        ('otro', 'Otro'),
-    ]
-
-    nombre = models.CharField(max_length=50)
-    email = models.CharField(max_length=150)
-    profesion = models.CharField(max_length=80)
-    opciones_interes = models.CharField(max_length=400, choices=OPCIONES_INTERES)
+        ('Scrum_master', 'Scrum master'),
+        ('Otro', 'Otro')
+    ])
     cv = models.FileField(upload_to='cv/')
-    linkedin_url = models.URLField(blank=True, null=True, default=None)
-
-    def __str__(self):
-        return self.nombre
+    linkedin_url = models.URLField(blank=True, null=True)

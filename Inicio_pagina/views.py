@@ -75,6 +75,7 @@ def form_personas(request):
         formulario = FormularioPersonasForm(request.POST, request.FILES)
         if formulario.is_valid():
             archivo_adjunto = request.FILES.get('cv')
+            formulario.save()
             if archivo_adjunto:
                 try:
                     enviar_correo_trabajadores(formulario.cleaned_data, archivo_adjunto)
@@ -123,3 +124,4 @@ def enviar_correo_trabajadores(datos_formulario, archivo_adjunto):
         email.send()
     except Exception as e:
         print("Error al enviar el correo electrónico:", e)
+        print(traceback.format_exc())
